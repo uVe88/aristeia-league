@@ -1,39 +1,77 @@
 import React, { Component } from 'react';
-import { getTournamentSummaryList } from '../services/tournamentService'
-import TournamentSummaryCard from '../components/tournamentSummaryCard'
+import { getTournamentById } from '../services/tournamentService'
 import styled from '@emotion/styled'
-import { Grid } from '@material-ui/core';
 import { withRouter } from 'react-router'
+import { withStyles } from '@material-ui/core/styles';
+import { Redirect, Route } from 'react-router-dom';
+import BottomNavigationMenu from '../components/tournamentBottomNavitagation'
+import RankingPage from './tournamentPage.ranking'
+import PlayerPage from './tournamentPage.players'
+import RoundPage from './tournamentPage.rounds'
+
 //import reactStyled from 'react-emotion'
 
-class TournamentPage extends Component {
+class TournamentDetailPage extends Component {
 
 	constructor() {
 		super()
 
 		this.state = {
-			tournamentSummaryList: []
+			tournament: null,
+			value: 0
 		}
 	}
 
-    componentDidMount() {
-		getTournamentSummaryList().subscribe({
-			next: x => this.setState({ tournamentSummaryList: x }),
-			error: err => console.error('getTournamentSummaryList something wrong occurred: ' + err),
-			complete: () => console.log('getTournamentSummaryList done'),
-		});
+    async componentDidMount() {
+		const id = this.props.match.params.tournamentId
+		const t = await getTournamentById(id)
+		this.setState({ tournament: t })
 	}
-	
+
 	render() {
+		const { classes, match, history } = this.props
+		const { tournament } = this.state
+
 		return (
-			<Grid container spacing={8} justify="center">
-				{ this.state.tournamentSummaryList.map(t => 
-					<Grid item id="BUSCAME" >
-						<TournamentSummaryCard key={t.id} id={t.id} name={t.name} description={t.description } />
-					</Grid>)}
-			</Grid>
-		);
+			tournament ?			
+				<Main>
+					<Route path={`${match.path}/info`} render={() => <h1>{`New info page t:${match.params.tournamentId}`}</h1>}/>
+					<Route path={`${match.path}/players`} render={() => <PlayerPage tournament={tournament} />}/>
+					<Route path={`${match.path}/ranking`} render={() => <RankingPage tournament={tournament} />}/>
+					<Route exact path={`${match.path}/rounds`} render={() => <RoundPage tournament={tournament}/>}/>
+					<Route path={`${match.path}/rounds/:roundId`} render={({match}) => 
+						{
+							console.log(match)
+							return <h1>{`New round page t:${match.params.tournamentId} r:${match.params.roundId}`}</h1>
+						}
+					}/>
+											
+					<BottomNavigationMenu tournament={this.state.tournament} />
+				</Main>
+			:
+			<h1>Tournament not found</h1>
+		)
 	}
 }
 
-export default withRouter(TournamentPage);
+const Main = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex: 1;
+`
+
+const styles = {
+	card: {
+	  //maxWidth: 345,
+	},
+	media: {
+	  //height: 60,
+	},
+	root: {
+		width: "100%"
+	  },
+  };
+
+export default withRouter(withStyles(styles)(TournamentDetailPage));
+

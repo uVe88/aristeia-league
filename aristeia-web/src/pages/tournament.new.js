@@ -1,34 +1,61 @@
 import React, { Component } from 'react';
-import { getTournamentSummaryList } from '../services/tournamentService'
-import TournamentSummaryCard from '../components/tournamentSummaryCard'
 import styled from '@emotion/styled'
-import { Grid } from '@material-ui/core';
 import { withRouter } from 'react-router'
+import { Form, Field } from 'react-final-form'
+import { createNewTournament } from '../services/tournamentService'
+
 //import reactStyled from 'react-emotion'
 
 class NewTournamentPage extends Component {
-
-	constructor() {
-		super()
-
-		// this.state = {
-		// 	tournamentSummaryList: []
-		// }
-	}
-
-    componentDidMount() {
-		// getTournamentSummaryList().subscribe({
-		// 	next: x => this.setState({ tournamentSummaryList: x }),
-		// 	error: err => console.error('getTournamentSummaryList something wrong occurred: ' + err),
-		// 	complete: () => console.log('getTournamentSummaryList done'),
-		// });
-	}
 	
+	sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
+	onSubmit = async values => {
+		await this.sleep(300)
+
+		const { name, description } = values
+		const tournamentId = await createNewTournament(
+			{
+				name,
+				description,
+				type: 'aristeia'
+			}
+		)
+
+		this.props.history.push(`/tournaments/${tournamentId}/info`)
+	}
+
 	render() {
 		return (
-			<h1>
-                New tournament
-            </h1>
+			<Form
+    			onSubmit={this.onSubmit}
+    			//validate={validate}
+				render={({ handleSubmit, form, submitting, pristine }) => (
+					<form onSubmit={handleSubmit}>
+						<div>
+							<label>Nombre</label>
+							<Field name="name" component="input" placeholder="Nombre del torneo" />
+						</div>
+						<div>
+							<label>Descripción</label>
+							<Field name="description" component="textarea" placeholder="Descripción del torneo" />
+						</div>
+
+						<div className="buttons">
+							<button type="submit" disabled={submitting || pristine}>
+							Submit
+							</button>
+							<button
+							type="button"
+							onClick={form.reset}
+							disabled={submitting || pristine}
+							>
+							Reset
+							</button>
+						</div>
+					</form>
+				)}
+			/>
 
 		);
 	}

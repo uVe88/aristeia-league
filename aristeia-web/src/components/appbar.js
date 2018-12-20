@@ -19,13 +19,13 @@ const styles = {
 };
 
 function SimpleAppBar(props) {
-  const { classes } = props;
+  const { classes, history } = props;
 
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
         <Toolbar className={classes.toolbar}>
-          <Typography variant="h6" color="inherit">
+          <Typography variant="h6" color="inherit" onClick={() => history.push('/tournaments')}>
               Aristeia App
           </Typography>
           <IconButton onClick={() => props.history.push('/tournaments/new')}>

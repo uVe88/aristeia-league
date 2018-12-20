@@ -10,13 +10,12 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { withRouter } from 'react-router-dom';
 
-import { from } from 'rxjs';
 const styles = {
   card: {
-    //maxWidth: 345,
+    width: 350,
   },
   media: {
-    height: 60,
+    height: 80,
   },
 };
 
@@ -24,7 +23,7 @@ function TournamentSummaryCard(props) {
   const { classes } = props;
   return (
     <Card className={classes.card}>
-      <CardActionArea onClick={ () => props.history.push('/tournaments/'+props.id) }>
+      <CardActionArea onClick={ () => props.history.push(`/tournaments/${props.id}/info`) }>
         <CardMedia
           className={classes.media}
           image="https://imperiofriki.com/c/17-category_default/aristeia.jpg"
