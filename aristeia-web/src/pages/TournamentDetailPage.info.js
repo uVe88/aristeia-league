@@ -5,6 +5,8 @@ import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 import { People, GridOn, Notes, Info } from '@material-ui/icons'
 import { withRouter } from 'react-router'
 import { withStyles } from '@material-ui/core/styles';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import BottomNavigationMenu from '../components/tournamentBottomNavitagation'
 //import reactStyled from 'react-emotion'
 
 class TournamentDetailPage extends Component {
@@ -22,8 +24,8 @@ class TournamentDetailPage extends Component {
 		const id = this.props.match.params.id
 		if(id) {
 			getTournamentById(id).subscribe({
-				next: x => this.setState({ tournament: x }),
-				error: err => console.error('getTournamentById something wrong occurred: ' + err),
+				next: t => this.setState({ tournament: t }),
+				error: err => console.error('getTournamentById something went wrong: ' + err),
 				complete: () => console.log('getTournamentById done'),
 			});
 		}
@@ -35,31 +37,27 @@ class TournamentDetailPage extends Component {
 
 	render() {
 		const { classes } = this.props
+		const { tournament } = this.state
+
 		return (
-			<Main id="TournamentDetailPage">
-				<div>
-				<h6>{this.state.tournament && this.state.tournament.name }</h6>
-				<p>{this.state.tournament && this.state.tournament.description }</p>
-				<p>{this.state.tournament && this.state.tournament.type }</p>
-				<p>{this.state.tournament && this.state.tournament.players.length }</p>
-				<p>{this.state.tournament && this.state.tournament.rounds.length }</p>
-				</div>
-				<BottomNavigation
-					value={this.state.value}
-					onChange={this.handleChange}
-					showLabels
-					className={classes.root}
-				>
-					<BottomNavigationAction label="Info" icon={<Info />} />
-					<BottomNavigationAction label="Jugadores" icon={<People />} />
-					<BottomNavigationAction label="Clasificación" icon={<GridOn />} />
-					<BottomNavigationAction label="Resultados" icon={<Notes />} />
-				</BottomNavigation>
-			</Main>
+			tournament ?			
+	
+				<Main id="TournamentDetailPage">
+					<div>
+						<h6>{tournament.name }</h6>
+						<p>{tournament.description }</p>
+						<p>{tournament.type }</p>
+						<p>{tournament.players.length }</p>
+						<p>{tournament.rounds.length }</p>
+					</div>
+					<BottomNavigationMenu tournament={this.state.tournament} position={0} />
+				</Main>
+
+			:
+			<h1>Tournament not found</h1>
 		)
 	}
 }
-
 
 const Main = styled.div`
 	display: flex;

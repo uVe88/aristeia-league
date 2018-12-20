@@ -28,7 +28,7 @@ function SimpleAppBar(props) {
           <Typography variant="h6" color="inherit">
               Aristeia App
           </Typography>
-          <IconButton onClick={() => props.history.push('/tournament/new')}>
+          <IconButton onClick={() => props.history.push('/tournaments/new')}>
             <Add />
           </IconButton>
         </Toolbar>

@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 //import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import AppBar from './components/appbar'
 import TournamentPage from './pages/tournamentPage'
-import TournamentDetailPage from './pages/TournamentDetailPage'
+import TournamentDetailPageInfo from './pages/TournamentDetailPage.info'
+import TournamentDetailPagePlayers from './pages/TournamentDetailPage.players'
+import TournamentDetailPageRanking from './pages/TournamentDetailPage.ranking'
+import TournamentDetailPageResults from './pages/TournamentDetailPage.results'
+import NewTournamentPage from './pages/tournament.new'
 import styled from '@emotion/styled'
 
 class App extends Component {
@@ -14,11 +18,18 @@ class App extends Component {
 				<Root id="App-Root">
 					<AppBar id='App-AppBar' />
 					<Main id='App-Main'>
-						<Route exact={true} path="/" component={TournamentPage} />
-						<Route exact={true} path="/tournament" component={TournamentPage} />
-						<Route exact={true} path="/tournament/new" render={() => <h1>new tournament</h1> } />
-						<Route exact={true} path="/tournament/:id" component={TournamentDetailPage} />
-						<Route exact={true} path="/tournament/:id/admin" render={() => <h1>admin tournament</h1> } />
+						<Route exact path="/" component={TournamentPage} />
+						<Switch>
+							<Route exact path="/tournaments" component={TournamentPage} />
+							<Route exact path="/tournaments/new" component={NewTournamentPage} />
+							<Redirect exact from="/tournaments/:id" to="/tournaments/:id/info" />
+							<Route exact path="/tournaments/:id/admin" render={() => <h1>admin tournament</h1> } />
+							<Route exact path="/tournaments/:id/info" component={TournamentDetailPageInfo} />
+							<Route exact path="/tournaments/:id/players" component={TournamentDetailPagePlayers} />
+							<Route exact path="/tournaments/:id/ranking" component={TournamentDetailPageRanking} />
+							<Route exact path="/tournaments/:id/results" component={TournamentDetailPageResults} />
+						</Switch>
+						
 					</Main>
 				</Root>
 			</Router>

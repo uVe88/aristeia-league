@@ -88,6 +88,91 @@ const data = [
                             frags: 2,
                             firstBlood: true
                         }
+                    },
+                    {
+                        id: 'g2',
+                        player1: {
+                            playerId: 'p2',
+                            points: 6,
+                            frags: 3,
+                            firstBlood: false
+                        },
+                        player2: {
+                            playerId: 'p4',
+                            points: 5,
+                            frags: 2,
+                            firstBlood: true
+                        }
+                    }
+                ]
+            },
+            {
+                number: 2,
+                games: [
+                    {
+                        id: 'g3',
+                        player1: {
+                            playerId: 'p1',
+                            points: 1,
+                            frags: 3,
+                            firstBlood: false
+                        },
+                        player2: {
+                            playerId: 'p2',
+                            points: 5,
+                            frags: 2,
+                            firstBlood: true
+                        }
+                    },
+                    {
+                        id: 'g4',
+                        player1: {
+                            playerId: 'p3',
+                            points: 6,
+                            frags: 3,
+                            firstBlood: false
+                        },
+                        player2: {
+                            playerId: 'p4',
+                            points: 5,
+                            frags: 2,
+                            firstBlood: true
+                        }
+                    }
+                ]
+            },
+            {
+                number: 2,
+                games: [
+                    {
+                        id: 'g5',
+                        player1: {
+                            playerId: 'p1',
+                            points: 1,
+                            frags: 3,
+                            firstBlood: false
+                        },
+                        player2: {
+                            playerId: 'p4',
+                            points: 5,
+                            frags: 2,
+                            firstBlood: true
+                        }
+                    },
+                    {
+                        id: 'g6',
+                        player1: {
+                            playerId: 'p3',
+                            points: 6,
+                            frags: 3,
+                            firstBlood: false
+                        },
+                        player2: {
+                            playerId: 'p2',
+                            points: 5,
+                            frags: 2,
+                            firstBlood: true
+                        }
                     }
                 ]
             }

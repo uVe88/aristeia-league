@@ -24,7 +24,7 @@ function TournamentSummaryCard(props) {
   const { classes } = props;
   return (
     <Card className={classes.card}>
-      <CardActionArea onClick={ () => props.history.push('/tournament/'+props.id) }>
+      <CardActionArea onClick={ () => props.history.push('/tournaments/'+props.id) }>
         <CardMedia
           className={classes.media}
           image="https://imperiofriki.com/c/17-category_default/aristeia.jpg"
