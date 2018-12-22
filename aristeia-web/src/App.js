@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 //import logo from './logo.svg';
-import './App.css';
+
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AppBar from './components/appbar'
 import TournamentListPage from './pages/tournamentListPage'
@@ -14,7 +14,7 @@ class App extends Component {
 			<Router>
 				<Root id="App-Root">
 					<AppBar id='App-AppBar' />
-					<Content id='App-Main'>
+					<Content id='App-Content'>
 						<Route exact path="/" component={TournamentListPage} />
 						<Route exact path="/tournaments" component={TournamentListPage} />
 						<Switch>
@@ -38,6 +38,7 @@ const Root = styled.div`
 
 const Content = styled.div`
 	background-color: green;
-	height: 100%;
+	flex: 1;
+	display: flex;
 `
 export default App;

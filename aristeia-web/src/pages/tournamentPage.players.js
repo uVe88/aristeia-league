@@ -6,7 +6,6 @@ import { List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, 
 				IconButton, TextField, Typography, Button } from '@material-ui/core';
 import { Person as PersonIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { deletePlayer, createPlayer } from '../services/tournamentService'
-//import reactStyled from 'react-emotion'
 
 class TournamentDetailPage extends Component {
 

@@ -58,19 +58,24 @@ class TournamentDetailPage extends Component {
 	}
 }
 
-
 const styles = {
 	bottomMenu: {
 
 	},
 	content: {
 		overflowY: 'auto',
-		height: '100%'
+		backgroundColor: 'red',
+		//height: '500px',
+		flex: 1,
+		maxHeight: '100%'
 	},
 	container: {
 		display: 'flex',
 		flexDirection: 'column',
-		height: '100%'
+		backgroundColor: 'purple',
+		height: '100%',
+		justifyContent: 'flex-end', 
+		minWidth: '100%'
 	}
   };
 

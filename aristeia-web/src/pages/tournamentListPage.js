@@ -54,7 +54,6 @@ const styles = {
 		display: 'flex',
 		justifyContent: 'flex-start',
 		height: 'fit-content',
-		width: '80%',
 		flexWrap: 'wrap'
 	},
 	card: {
@@ -62,7 +61,7 @@ const styles = {
 	},
 	container: {
 		overflowY: 'auto',
-		height: 'inherit'
+		height: 'inherit',
 	}
 }
 
