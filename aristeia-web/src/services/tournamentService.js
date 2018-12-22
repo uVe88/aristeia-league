@@ -119,6 +119,12 @@ export async function createNewTournament(tournament) {
     return createNewTournament.id
 }
 
+export async function deleteTournament(tournamentId) {
+    const index = data.findIndex(t => t.id === tournamentId)
+    data.splice(index, 1)
+    storeData()
+}
+
 export async function getRankingTournament(tournament) {
     
     if(!tournament.players) {
@@ -160,7 +166,8 @@ export async function getRankingTournament(tournament) {
 
 export async function deletePlayer(tournamentId, player) {
     const tournament = await getTournamentById(tournamentId)
-    tournament.players.pop(p => p.id === player.id)
+    const i = tournament.players.findIndex(p => p.id === player.id)
+    tournament.players.splice(i, 1)
     storeData()
     return tournament
 }
@@ -193,6 +200,7 @@ export async function createNewRound(tournamentId, engine) {
     const tournament = await getTournamentById(tournamentId)
     const ranking = await getRankingTournament(tournament)
     const matches = await engine.createMatches(tournament, ranking)
+    let gameNumberCount = 1
 
     const round = {
         id: uuid(),
@@ -200,6 +208,7 @@ export async function createNewRound(tournamentId, engine) {
         games: matches.map(m => {
             return {
                 id: uuid(),
+                number: gameNumberCount++,
                 player1: {
                     playerId: m.player1.player.id,
                     points: null,

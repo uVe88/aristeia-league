@@ -4,10 +4,9 @@ import { engineTypes } from '../roundEngines/engines'
 import { withRouter } from 'react-router'
 import { withStyles } from '@material-ui/core/styles';
 import { List, ListItem, Select, MenuItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Avatar, 
-				IconButton,Typography, Button, FormControl, InputLabel } from '@material-ui/core';
+				IconButton,Typography, Button } from '@material-ui/core';
 import { Whatshot as RoundIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { startTournament, createNewRound, deleteLastRound } from '../services/tournamentService'
-//import reactStyled from 'react-emotion'
 
 class TournamentDetailPage extends Component {
 
@@ -101,31 +100,33 @@ class TournamentDetailPage extends Component {
 				{ this.renderCreateRound(this.props, this.state) }
 			</div>
 			<Typography variant={'title'}>Rondas</Typography>
-			<div className={[classes.demo]}>
-				<List>
-					{ rounds.map(r => this.renderRoundItem(r, r === lastItem))}
-				</List>
-			</div>
+			
+			<List>
+				{ rounds.map(r => this.renderRoundItem(r, r === lastItem, classes))}
+			</List>
+			
 		</div>
 	}
 
-	renderRoundItem = (round, isDeleteActive) => {
-		return <ListItem onClick={() => this.navigateToRound(round.id)}>
-				<ListItemAvatar>
-					<Avatar>
-						<RoundIcon />
-					</Avatar>
-				</ListItemAvatar>
-				<ListItemText
-					primary={ <Typography>{`Número de ronda: ${round.number}` }</Typography> }
-					secondary={ <Typography>{`Número total de partidas: ${round.games ? round.games.length : 0}` }</Typography> }
-				/>
-				<ListItemSecondaryAction>
-					<IconButton aria-label="Delete" disabled={!isDeleteActive} onClick={() => this.deleteRound()}>
-							<DeleteIcon />
-					</IconButton>
-				</ListItemSecondaryAction>
-			</ListItem>
+	renderRoundItem = (round, isDeleteActive, classes) => {
+		return <div className={[classes.demo]}>
+				<ListItem onClick={() => this.navigateToRound(round.id)}>
+					<ListItemAvatar>
+						<Avatar>
+							<RoundIcon />
+						</Avatar>
+					</ListItemAvatar>
+					<ListItemText
+						primary={ <Typography>{`Número de ronda: ${round.number}` }</Typography> }
+						secondary={ <Typography>{`Número total de partidas: ${round.games ? round.games.length : 0}` }</Typography> }
+					/>
+					<ListItemSecondaryAction>
+						<IconButton aria-label="Delete" disabled={!isDeleteActive} onClick={() => this.deleteRound()}>
+								<DeleteIcon />
+						</IconButton>
+					</ListItemSecondaryAction>
+				</ListItem>
+			</div>
 	}
 
 	renderCreateRound = (props, state) => {

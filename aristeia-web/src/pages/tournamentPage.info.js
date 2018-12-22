@@ -3,8 +3,6 @@ import styled from '@emotion/styled'
 import { withRouter } from 'react-router'
 import { withStyles } from '@material-ui/core/styles';
 
-//import reactStyled from 'react-emotion'
-
 class TournamentDetailPage extends Component {
 
 	render() {

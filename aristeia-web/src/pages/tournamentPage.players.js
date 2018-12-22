@@ -33,31 +33,28 @@ class TournamentDetailPage extends Component {
 
 		return (
 			tournament ?
-			// <List dense={dense}>
 			<div>
 				<Typography variant="title">Añadir jugadores</Typography>
 				<div className={classes.demo}>
-					<form className={classes.container}>
-						<TextField
-							disabled={tournament.status !== 'open'}
-							className={classes.nameInput}
-							label="Nombre"
-							style={{ margin: 8 }}
-							placeholder="Introduce el nombre del jugador"
-							margin="normal"
-							error= {error}
-							onKeyPress={this.onKeyPress}
-							inputRef={this.textInput}
-							InputLabelProps={{
-								shrink: true,
-							}}
-							value={ name }
-							onChange= { this.handleNameChanges }
-						/>
-						<Button variant="contained" color="primary" disabled={tournament.status !== 'open'} className={classes.button} onClick={() => this.addPlayer(name)}>
-							Añadir
-						</Button>
-					</form>
+					<TextField
+						disabled={tournament.status !== 'open'}
+						className={classes.nameInput}
+						label="Nombre"
+						style={{ margin: 8 }}
+						placeholder="Introduce el nombre del jugador"
+						margin="normal"
+						error= {error}
+						onKeyPress={this.onKeyPress}
+						inputRef={this.textInput}
+						InputLabelProps={{
+							shrink: true,
+						}}
+						value={ name }
+						onChange= { this.handleNameChanges }
+					/>
+					<Button variant="contained" color="primary" disabled={tournament.status !== 'open'} className={classes.button} onClick={() => this.addPlayer(name)}>
+						Añadir
+					</Button>
 				</div>
 				<Typography variant="title">Lista de jugadores</Typography>
 				<div className={classes.demo}> 
@@ -75,6 +72,24 @@ class TournamentDetailPage extends Component {
 		)
 	}
 
+	renderPlayerItem = (player, tournament) => {
+		return <ListItem>
+				<ListItemAvatar>
+					<Avatar>
+						<PersonIcon />
+					</Avatar>
+				</ListItemAvatar>
+				<ListItemText
+					primary={player.name}
+					// secondary={secondary ? 'Secondary text' : null}
+				/>
+				<ListItemSecondaryAction>
+					<IconButton aria-label="Delete" onClick={() => this.deletePlayer(player)} disabled={tournament.status !== 'open'}>
+							<DeleteIcon />
+					</IconButton>
+				</ListItemSecondaryAction>
+			</ListItem>
+	}
 	onKeyPress = (e) => {
 		if (e.key == 'Enter') {
 			this.addPlayer(this.state.name)
@@ -119,25 +134,6 @@ class TournamentDetailPage extends Component {
 				error: true
 			})
 		}
-	}
-
-	renderPlayerItem = (player, tournament) => {
-		return <ListItem>
-				<ListItemAvatar>
-					<Avatar>
-						<PersonIcon />
-					</Avatar>
-				</ListItemAvatar>
-				<ListItemText
-					primary={player.name}
-					// secondary={secondary ? 'Secondary text' : null}
-				/>
-				<ListItemSecondaryAction>
-					<IconButton aria-label="Delete" onClick={() => this.deletePlayer(player)} disabled={tournament.status !== 'open'}>
-							<DeleteIcon />
-					</IconButton>
-				</ListItemSecondaryAction>
-			</ListItem>
 	}
 }
 

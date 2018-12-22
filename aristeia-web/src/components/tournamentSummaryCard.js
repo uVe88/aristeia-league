@@ -1,18 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import { CardActionArea, Card, CardActions, CardContent, CardMedia, Typography, IconButton }from '@material-ui/core';
+import { Delete as DeleteIcon } from '@material-ui/icons'
 import { withRouter } from 'react-router-dom';
 
 const styles = {
   card: {
     width: 350,
+    height: 230
   },
   media: {
     height: 80,
@@ -20,10 +16,10 @@ const styles = {
 };
 
 function TournamentSummaryCard(props) {
-  const { classes } = props;
+  const { classes, name, description, tournament, onDelete } = props;
   return (
     <Card className={classes.card}>
-      <CardActionArea onClick={ () => props.history.push(`/tournaments/${props.id}/info`) }>
+      <CardActionArea onClick={ () => props.history.push(`/tournaments/${tournament.id}/info`) }>
         <CardMedia
           className={classes.media}
           image="https://imperiofriki.com/c/17-category_default/aristeia.jpg"
@@ -31,21 +27,18 @@ function TournamentSummaryCard(props) {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {props.name}
+            { name }
           </Typography>
           <Typography component="p">
-            {props.description}
+            { description }
           </Typography>
         </CardContent>
       </CardActionArea>
-      {/* <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions> */}
+      <CardActions>
+        <IconButton aria-label="Delete" onClick={() => onDelete(tournament.id)}>
+							<DeleteIcon />
+        </IconButton>
+      </CardActions>
     </Card>
   );
 }
@@ -54,7 +47,8 @@ TournamentSummaryCard.propTypes = {
   classes: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
+  tournament: PropTypes.object.isRequired
 };
 
 export default withRouter(withStyles(styles)(TournamentSummaryCard));

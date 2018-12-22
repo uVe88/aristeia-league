@@ -29,7 +29,6 @@ class NewTournamentPage extends Component {
 		return (
 			<Form
     			onSubmit={this.onSubmit}
-    			//validate={validate}
 				render={({ handleSubmit, form, submitting, pristine }) => (
 					<form onSubmit={handleSubmit}>
 						<div>

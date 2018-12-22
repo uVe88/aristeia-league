@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { getTournamentSummaryList } from '../services/tournamentService'
 import TournamentSummaryCard from '../components/tournamentSummaryCard'
-import styled from '@emotion/styled'
-import { Grid } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router'
-//import reactStyled from 'react-emotion'
+import { deleteTournament } from '../services/tournamentService' 
 
 class TournamentListPage extends Component {
 
@@ -22,15 +21,49 @@ class TournamentListPage extends Component {
 	}
 	
 	render() {
+		const { classes } = this.props
 		return (
-			<Grid container spacing={8} justify="center">
-				{ this.state.tournamentSummaryList.map(t => 
-					<Grid item id="BUSCAME" >
-						<TournamentSummaryCard key={t.id} id={t.id} name={t.name} description={t.description } />
-					</Grid>)}
-			</Grid>
+			<div className={classes.container}>
+				<div className={classes.content}>
+					{ 
+						this.state.tournamentSummaryList.map(t => 		
+						<div className={classes.card}><TournamentSummaryCard key={t.id} onDelete={this.handleOnDelete} tournament={t} name={t.name} description={t.description } /></div>)
+					}
+				</div>
+			</div>
 		);
+	}
+
+	handleOnDelete = async (id) => {
+		this.setState({
+			loading: true
+		})
+		
+		await deleteTournament(id)
+		const tournamentList = await getTournamentSummaryList()
+		
+		this.setState({
+			loading: false,
+			tournamentSummaryList: tournamentList
+		})
 	}
 }
 
-export default withRouter(TournamentListPage);
+const styles = {
+	content: {
+		display: 'flex',
+		justifyContent: 'flex-start',
+		height: 'fit-content',
+		width: '80%',
+		flexWrap: 'wrap'
+	},
+	card: {
+		margin: 10
+	},
+	container: {
+		overflowY: 'auto',
+		height: 'inherit'
+	}
+}
+
+export default withRouter(withStyles(styles)(TournamentListPage));
